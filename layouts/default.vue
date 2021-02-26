@@ -9,7 +9,6 @@
         <span v-if="drawer">MENÚ</span>
         <span v-else>{{ pageTitle }} </span>
       </v-toolbar-title>
-      <v-spacer></v-spacer>
 
       <div v-if="$nuxt.isOnline" class="f-right">
         <v-tooltip  v-model="showOnline" bottom >
@@ -43,9 +42,6 @@
         <Navigation />  
         <nuxt />
       </v-container>
-      <v-footer class="footer" fixed>
-
-      </v-footer>
     </v-main>
     <v-snackbar v-model="snackbar.status" :timeout="snackbar.timeout" :color="snackbar.type" dark>
       {{ snackbar.message }}
@@ -102,13 +98,11 @@ export default {
     position: absolute;
     right: 15px;
   }
-  .footer{
+  .v-main__wrap{
     background-color: transparent !important;
     background-image: url("../assets/imgs/wave.svg") ;
+    background-position: center bottom;
     background-repeat: no-repeat;
-    background-size: cover;
-    height:150px;
-    width: 100%;
-    z-index: 0;
+    background-size: contain;
   }
 </style>

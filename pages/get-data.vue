@@ -1,6 +1,6 @@
 <template>
   <div class="formContainer">
-    <v-form action="" class="form" ref="form">
+    <v-form action="" class="form" ref="form" @submit.prevent="saveData">
       <v-row>
         <h3 class="title">Formulario</h3>
       </v-row>
@@ -43,7 +43,7 @@
           </span>
         </v-col>
         <v-col cols="12" md="12">
-          <v-btn class="buttonSend" @click="saveData()" block x-large dark>
+          <v-btn class="buttonSend" type="submit" block x-large dark>
             ENVIAR
           </v-btn>
         </v-col>
@@ -62,11 +62,13 @@ export default {
     form: {
       names:    null,
       address:  null,
-      genre:    null,
+      genre:    null
     }
   }),
   methods: {
     saveData(){ 
+      if( this.form.names == '' || this.form.names == null || this.form.names == " " )
+        return false;
       this.$store.dispatch( 'saveUser', JSON.stringify(this.form) );
     }
   }

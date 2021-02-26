@@ -40,24 +40,23 @@ export const actions = {
         commit( 'presentToast', [STATUS[0], `${ MESSAGES.not_saved } ${ err }`, 'red darken-4', -1] );
         return false;
       }
-      /*
+      /* */
       //CORS Warning restriction
-      let serverResponse = await axios({
+      let serverResponse = false;
+
+      if( $nuxt.isOnline )
+        serverResponse = await axios({
                                     method: 'PUT',
-                                    url: "https://postman-echo.com/put",
+                                    url: "/postman",
                                     data: user,
-                                    headers: HEADERS,
-                                    xsrfCookieName: 'csrftoken',
-                                    xsrfHeaderName: 'X-CSRFToken',
-                                    withCredentials: true
                                   });
       
       /** */
 
-      let serverResponse = 0;
-      //Generated a tandom value for server error simulation
-      if( $nuxt.isOnline )
-        serverResponse = Math.random() > 0.15 ? true : false;
+      // let serverResponse = 0;
+      // //Generated a tandom value for server error simulation
+      // 
+      //   serverResponse = Math.random() > 0.15 ? true : false;
 
       if( serverResponse ){
         commit( 'presentToast', [STATUS[2], MESSAGES.sent, 'green darken-3', 3000] );
