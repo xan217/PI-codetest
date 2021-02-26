@@ -44,12 +44,14 @@ export default {
   modules: [
     '@nuxtjs/axios'
   ],
+  // Proxy configuration
   axios: {
-    proxy: true, // Can be also an object with default options
+    proxy: true,
   },
   proxy: {
     '/postman': { target: "https://postman-echo.com/put", pathRewrite: { '^/postman': '' } },
   },
+
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
     customVariables: ['~/assets/variables.scss'],

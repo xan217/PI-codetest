@@ -31,7 +31,6 @@ export const actions = {
     return user;
   },
   async saveUser( { commit }, user ) {
-
     if( process.browser ){
       try{
         localStorage.setItem( "user", JSON.stringify(user) );
@@ -40,40 +39,21 @@ export const actions = {
         commit( 'presentToast', [STATUS[0], `${ MESSAGES.not_saved } ${ err }`, 'red darken-4', -1] );
         return false;
       }
-      /* */
-      //CORS Warning restriction
       let serverResponse = false;
 
-      if( $nuxt.isOnline )
-        serverResponse = await axios({
-                                    method: 'PUT',
-                                    url: "/postman",
-                                    data: user,
-                                  });
-      
-      /** */
+      if( $nuxt.isOnline )  serverResponse = await axios({ method: 'PUT', url: "/postman", data: user, });
 
-      // let serverResponse = 0;
-      // //Generated a tandom value for server error simulation
-      // 
-      //   serverResponse = Math.random() > 0.15 ? true : false;
-
-      if( serverResponse ){
-        commit( 'presentToast', [STATUS[2], MESSAGES.sent, 'green darken-3', 3000] );
-      }
-      else{
-        commit( 'presentToast', [STATUS[1], MESSAGES.saved_but_not_sent, 'amber darken-4', 6000] );
-      }
+      if( serverResponse )  commit( 'presentToast', [STATUS[2], MESSAGES.sent, 'green darken-3', 3000] );
+      else                  commit( 'presentToast', [STATUS[1], MESSAGES.saved_but_not_sent, 'amber darken-4', 6000] );
     }
     else{
       commit( 'presentToast', [STATUS[0], MESSAGES.not_saved, 'red darken-4', -1] );
     }
   },
+
   toggleOnline({ commit, getters, dispatch }, onlineStatus ){
     commit( 'setOnlineStatus', onlineStatus );
-
-    if( getters.getDataStatus == STATUS[1] ) 
-      dispatch('saveUser', localStorage.getItem("user") );
+    if( getters.getDataStatus == STATUS[1] )  dispatch('saveUser', localStorage.getItem("user") );
   },
 
   hideSnackbar({ commit })          { commit( 'hideToast'); },
